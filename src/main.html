@@ -9,8 +9,43 @@
 </body>
 <script>
 
+
+    // function App() {
+    //     let a = 5;
+    //     function Input() {
+    //         a *= 5
+    //         return a
+    //     }
+    //     return Input
+    // }
+    //
+    // let a = App()
+    // console.log(a())
+    // console.log(a())
+    // console.log(a())
+    //
+    // let b = App()
+    // console.log(b())
+    // console.log(b())
+    // console.log(b())
+
+    // function digitize(n) { //Пушит цифры в массив и оставляет их там цифрами
+    //     return Array.from(String(n), Number).reverse();
+    // }
+    // function digitize(n) {
+    //     return String(n).split('').map(Number).reverse()
+    // }
+    // function digitize(n) {
+    //     return String(n).split('').reverse().map(Number)
+    // }
+
+    // function isDivisible(n, x, y) { //проверяет делятся ли оба числа без остатка
+    //     return (n % x === 0  && n % y === 0)
+    // }
+
     // const arr = n => Array.from({length: n}, (_, i) => n - i) //Рекурсия через Array.from
     // console.log(arr(30))
+    // const arr = n => Array.from({length: n}, (_, i) => i + 1)
 
     // function booleanToString(b){ //Переводим boolean значение в строку
     //     return b ? "true" : "false"
@@ -33,8 +68,8 @@
     // console.log(invert([1,2,3,4,5]))
     // const invert = array => array.map(num => -num);
 
-// let a = [{stack: ['ya','ti','mi']}];  //Массив с объектом, который содержит массив
-// console.log(a[0].stack[0])
+    // let a = [{stack: ['ya','ti','mi']}];  //Массив с объектом, который содержит массив
+    // console.log(a[0].stack[0])
 
     // function reverseWords(str){ //делим строку на слова, и соединяем в обратной последовательности
     // let arr = str.split(" ");
@@ -1664,7 +1699,7 @@
     // }
     // printFarmInventory(7, 11);
 
-    // function findSolution(target) {
+    // function findSolution(target) { //крутая рекурсия
     //   function find(current, history) {
     //     if (current == target) {
     //       return history;
@@ -2076,20 +2111,21 @@
 
     // !!! Смысл в том, что другая функция считает свое окружение, к которому мы не имеет доступа.
     // function makeCounter() {
-    //  var count = 0;
-    //   return {
-    //       increment: function() {
-    //       count++;
-    //       return count;
+    //     var count = 0;
+    //     return {
+    //         increment: function () {
+    //             count++;
+    //             return count;
+    //         }
     //     }
-    //   };
-    // };
+    // }
 
+    //
     // var counter = makeCounter();
     // console.log(counter.increment());
     // console.log(counter.increment());
     // console.log(counter.increment());
-
+    //
     // function makeCounter() {
     //  var count = 0;
     //     function counter() {
@@ -2098,7 +2134,7 @@
     //  }
     //  return counter;
     // }
-
+    //
     // let a = makeCounter();
     // console.log(a());
     // console.log(a());
