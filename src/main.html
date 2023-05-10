@@ -20,9 +20,50 @@ function  getDivisorsCnt(n){
     return count
 }
 
-function digitize(n) { //число переводим в строку, разделяем в массива, разворачиваем и преобразуем массив строк в массив чисел
-    return n.toString().split('').reverse().map(t => +t)
-}
+// switchItUp=n=>["Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine"][n] //подход без свитча, а берем нужный индекс со строкой из массива
+// function switchItUp(number) { //Switch case для перевода числа в строку
+//     switch (number) {
+//         case 0: return 'Zero';
+//         case 1: return 'One';
+//         case 2: return 'Two';
+//         case 3: return 'Three';
+//         case 4: return 'Four';
+//         case 5: return 'Five';
+//         case 6: return 'Six';
+//         case 7: return 'Seven';
+//         case 8: return 'Eight';
+//         case 9: return 'Nine';
+//     }
+// }
+
+// function fakeBin(x){ //преобразует строку в массив, цифры больше 5 в 1, другие 0 и объеденяет назад в строку
+//     let num = x.toString().split('')
+//     return num.map(t => t>4 ? 1 : 0).join('')
+// }
+// function fakeBin(x) {
+//     return x.replace(/\d/g, d => d < 5 ? 0 : 1);
+// }
+//
+// function paperwork(n, m) { //Умножение с проверкой, что оба числа больше 0
+//     return n > 0 && m > 0 ? n * m : 0
+// }
+
+// function findNeedle(haystack) { //ищет в массиве сопвпадение по слову
+//     return `found the needle at position ${haystack.indexOf("needle")}`
+// }
+
+// function abbrevName(name){ //Переводит имя в инициалы и соединяет через точку
+//     return name.split(' ').map(i => i[0].toUpperCase()).join('.')
+// }
+// function abbrevName(name) {
+//     let a = name.split(' ')
+//     return a[0][0] + "." + a[1][0]
+// }
+// abbrevName("Sam Harris")
+//
+// function digitize(n) { //число переводим в строку, разделяем в массива, разворачиваем и преобразуем массив строк в массив чисел
+//     return n.toString().split('').reverse().map(t => +t)
+// }
 
 // function add(x) { //пробросить значение глубоко в функцию на 3м вызове и посчтитать
 //     return function(y) {
