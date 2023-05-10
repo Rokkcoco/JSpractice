@@ -9,9 +9,6 @@
 </body>
 <script>
 
-
-
-
 function  getDivisorsCnt(n){
     let count = 0;
     for (let i = 1; i <= Math.sqrt(n); i++) {
@@ -22,6 +19,23 @@ function  getDivisorsCnt(n){
     }
     return count
 }
+
+function digitize(n) { //число переводим в строку, разделяем в массива, разворачиваем и преобразуем массив строк в массив чисел
+    return n.toString().split('').reverse().map(t => +t)
+}
+
+// function add(x) { //пробросить значение глубоко в функцию на 3м вызове и посчтитать
+//     return function(y) {
+//         return function(z) {
+//             return x + y + z
+//         }
+//     }
+// }
+// add(10)(20)(30);
+
+// function splitify(str) { //разделить массив через регулярку, выбрав только символы
+//     return str.split(/\W/)
+// }
 
 // function alphabeticalOrder(arr) { //отсортировать массив через функцию
 //     return arr.sort(function(a,b) {
