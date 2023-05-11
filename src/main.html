@@ -20,6 +20,12 @@ function  getDivisorsCnt(n){
     return count
 }
 
+function twoSort(s) { //отсортировать массив, взять 1ый элемент , разделить и соединить со строковыми символами
+    return s.sort()[0].split('').join('***');
+}
+
+// const oddCount = n => Math.floor(n/2) ; //!!! Для задач где просят вывести длинну огромных массивов
+
 // switchItUp=n=>["Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine"][n] //подход без свитча, а берем нужный индекс со строкой из массива
 // function switchItUp(number) { //Switch case для перевода числа в строку
 //     switch (number) {
