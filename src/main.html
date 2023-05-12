@@ -20,9 +20,16 @@ function  getDivisorsCnt(n){
     return count
 }
 
-function twoSort(s) { //отсортировать массив, взять 1ый элемент , разделить и соединить со строковыми символами
-    return s.sort()[0].split('').join('***');
+function index(array, n){ //вернуть число из массива в степени n, или же -1, если такое по длинне оно отсутствует
+    //your code here
+    return array[n] ** n || -1;
 }
+
+const problem = x => typeof x === 'string' ? 'Error' : x * 50 + 6; //Проверить значение на строку
+
+// function twoSort(s) { //отсортировать массив, взять 1ый элемент , разделить и соединить со строковыми символами
+//     return s.sort()[0].split('').join('***');
+// }
 
 // const oddCount = n => Math.floor(n/2) ; //!!! Для задач где просят вывести длинну огромных массивов
 
