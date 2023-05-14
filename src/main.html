@@ -102,20 +102,20 @@ const problem = x => typeof x === 'string' ? 'Error' : x * 50 + 6; //Прове�
 //     return Math.max(wait + on - cap, 0);
 // }
 
-// function removeEveryOther(arr){ //пушим в массим каждое 2ое значение
-//     return arr.filter(function(elem, index) {
-//         return index % 2 === 0;
-//     });
-// }
-//     function removeEveryOther(arr){
-//         //your code here
-//         let arraY = []
-//         for (let i = 0; i< arr.length; i+=2) {
-//             arraY.push(arr[i])
-//         }
-//         console.log(arraY)
-//     }
-//     removeEveryOther(['Hello', 'Goodbye', 'Hello Again'])
+function removeEveryOther(arr){ //пушим в массим каждое 2ое значение
+    return arr.filter(function(elem, index) {
+        return index % 2 === 0;
+    });
+}
+    function removeEveryOther(arr){
+        //your code here
+        let arraY = []
+        for (let i = 0; i< arr.length; i+=2) {
+            arraY.push(arr[i])
+        }
+        console.log(arraY)
+    }
+    removeEveryOther(['Hello', 'Goodbye', 'Hello Again'])
 
     // function getGrade (s1, s2, s3) { //считам среднее число и выводим результат
     //     avg = (s1+s2+s3)/3;
