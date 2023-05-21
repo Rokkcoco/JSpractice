@@ -126,14 +126,14 @@ function  getDivisorsCnt(n){
 //     }
 //     removeEveryOther(['Hello', 'Goodbye', 'Hello Again'])
 
-    // function getGrade (s1, s2, s3) { //считам среднее число и выводим результат
-    //     avg = (s1+s2+s3)/3;
-    //     if (avg < 60)  return "F";
-    //     else if (avg < 70) return "D";
-    //     else if (avg < 80) return "C";
-    //     else if (avg < 90) return "B";
-    //     else return "A";
-    // }
+    function getGrade (s1, s2, s3) { //считам среднее число и выводим результат
+        avg = (s1+s2+s3)/3;
+        if (avg < 60)  return "F";
+        else if (avg < 70) return "D";
+        else if (avg < 80) return "C";
+        else if (avg < 90) return "B";
+        else return "A";
+    }
 
     // const points=games=>games.reduce((output,current)=>{ //!!!сравнивает значение в каждом индексе массива и возвращает сумму
     //     return output += current[0]>current[2] ? 3 : current[0]===current[2] ? 1 : 0;
