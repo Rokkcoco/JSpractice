@@ -116,6 +116,25 @@ console.log(isIncludes("Incubator", "inba"))
 console.log(isIncludes("Incubator", "Incubatorrr"))
 
 
+const isIncludesStrict = (string, substring) => {
+    string = string.toLowerCase();
+    substring = substring.toLowerCase();
+    for (const char of substring) {
+        if (!string.includes(char)) {
+            return false;
+        }
+        string = string.replace(char, '');
+        console.log(string)
+    }
+    return true;
+}
+
+console.log(isIncludesStrict("Incubator", "Cut"))
+console.log(isIncludesStrict("Incubator", "table"))
+console.log(isIncludesStrict("Incubator", "inbba"))
+console.log(isIncludesStrict("Incubator", "inba"))
+console.log(isIncludesStrict("Incubator", "Incubatorrr"))
+
 
 
 
