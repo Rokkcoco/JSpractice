@@ -14,12 +14,12 @@ myNumber = 6;
 console.log(myNumber); // значение переменной num изменится
 
 // Переменную с const нельзя изменять.
-// const yourNumber = 5;
-// yourNumber = 6;
-// console.log(yourNumber); // будет ошибка
+const yourNumber = 5;
+yourNumber = 6;
+console.log(yourNumber); // будет ошибка
 
 // По этой же логике константу нельзя создавать пустой.
-// const age;
+const age;
 console.log(age); // будет ошибка
 let abc;
 console.log(abc); // значение будет undefined
@@ -28,9 +28,9 @@ console.log(abc); // значение будет undefined
 // не можем переопределить эту переменную новым значением, но мы можем
 // изменять свойства объекта.
 
-// const user = { name: 'Pavel', age: 25 };
-// user = { name: 'Alex', age: 28 }; // TypeError: Assignment to constant variable.
-// user.age = 26; // это допустимо
+const user = { name: 'Pavel', age: 25 };
+user = { name: 'Alex', age: 28 }; // TypeError: Assignment to constant variable.
+user.age = 26; // это допустимо
 
 //                                           Отличия let и var
 // Переменную с var можно объявлять повторно с таким же именем
