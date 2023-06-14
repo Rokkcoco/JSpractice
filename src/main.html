@@ -9,35 +9,32 @@
 </body>
 <script>
 
-// function  getDivisorsCnt(n){
-//     let count = 0;
-//     for (let i = 1; i <= Math.sqrt(n); i++) {
-//         if (n % i === 0) {
-//             count += (i * i === n) ? 1 : 2
-//
-//         }
-//     }
-//     return count
-// }
+function  getDivisorsCnt(n){
+    let count = 0;
+    for (let i = 1; i <= Math.sqrt(n); i++) {
+        if (n % i === 0) {
+            count += (i * i === n) ? 1 : 2
 
-function getBanknoteList(amountOfMoney) {
-    //...здесь пишем код.
-    // В return стоит "заглушка", чтоб typescript не ругался
-    const banknotes = [1000, 500, 100, 50, 20, 10, 5, 2, 1]
-    let numb = amountOfMoney
-    let res = []
-
-    while (numb > 0) {
-        for (let i = 0; i < banknotes.length ; i++)
-            while (numb >= banknotes[i]) {
-                numb = numb - banknotes[i]
-                res.push(banknotes[i])
-            }
+        }
     }
-    return res
+    return count
 }
 
-console.log(getBanknoteList(2500))
+// function getBanknoteList(amountOfMoney) {
+//     const banknotes = [1000, 500, 100, 50, 20, 10, 5, 2, 1]
+//     let numb = amountOfMoney
+//     let res = []
+//
+//     while (numb > 0) {
+//         for (let i = 0; i < banknotes.length ; i++)
+//             while (numb >= banknotes[i]) {
+//                 numb = numb - banknotes[i]
+//                 res.push(banknotes[i])
+//             }
+//     }
+//     return res
+// }
+// console.log(getBanknoteList(2500))
 
 // function twiceAsOld(dadYearsOld, sonYearsOld) { //Math.abs выводит всегда положительное число
 //     return Math.abs(dadYearsOld - sonYearsOld*2)
