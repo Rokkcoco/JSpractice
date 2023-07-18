@@ -564,9 +564,9 @@ let f = function () {
 };
 
 let obj = {
-    //this {}
     x: 4,
     m: function () {
+        //this {}
         console.log(this.x);
     }
 };
