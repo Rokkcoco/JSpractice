@@ -5,11 +5,447 @@
     <title>Моя первая настоящая HTML-страничка</title>
 </head>
 <body>
-
+<div id="1" class="yo">
+    <div id="2" class="yo">
+        <div id="3" class="yo">
+            <button  id="4" class="yo">OK</button>
+        </div>
+    </div>
+</div>
 </body>
 <script>
 
 
+    // let a = 1
+    // a.valueOf() === 1
+    // a.toString() === "1"
+    //
+    // let b = "123"
+    // b.valueOf() === "123"
+    // b.toString() === "123"
+    //
+    // let obj = {name:"Alex"}
+    // obj.valueOf() === {name: 'Alex'}
+    // obj.toString() === '[object Object]'
+    //
+    // let arr = [123]
+    // arr.valueOf() === [123]
+    // arr.toString() === '123'
+    //
+    // let pr = Promise.resolve(5)
+    // pr.toString() === '[object Promise]'
+    // pr.valueOf() === Promise{<fulfilled>: 5}
+    //
+    // let t = true
+    // t.toString() === "true"
+    // t.valueOf() === true
+
+
+    //Частичное применение
+    //отличается от каррирования тем, что каррирование возвращает функцию даже если мы не передали все параметры
+    //а эта нам возвращает функцию с уже определенным набором аргументов, но в случае если мы не передадим оставшиеся все
+    //то мы получим ошибку а не новую функцию в которой нужно будет передать оставшиеся аргументы
+    const partialSum = partial(sum, 42)
+    partialSum(20,38) //100
+    partialSum(17) //NaN
+
+
+    console.log([2] * ['2']) //4
+    console.log(true + false) //1, true приводится к 1, false к 0
+    console.log('' + 1) //"1"
+    console.log(true + []) //"true" string
+    console.log({}-[]) //NaN, без скобочек -0
+    //null приводится к 0
+    //true / false	1 / 0
+    console.log({}+[]) //object Object, без скобочек 0
+    console.log([]+{}) //object Object
+    console.log([]-{}) //NaN
+    console.log(undefined + "2") //"undefined2"
+    console.log(undefined + 2) //NaN => undefined будет при приведении равен NaN
+    console.log(!![]) //true
+    console.log(!!{}) //true
+
+    //if () при работа в if производится обертка Boolean() которая приводит [], {} к тру, либо писать !!
+
+    //объект всегда true, если создавать как обертку через new Boolean(false) он будет в условиях играть как true, тк остается объектом
+
+    //мы можем не оборачивать примитив в () чтобы вызвать методы, а поставить просто две точки будет работать
+    //просто точка воспринимается движком как десятичная часть числа, две точки или пробел мы даем знать , что ее нет
+    console.log(22..toString())
+    console.log(22 .toString())
+
+    const a = {
+        age: 2,
+        showAge() {
+            console.log(this.age)
+        }
+    }
+
+    setTimeout(() => a.showAge(),100)
+
+    function calc(obj) {
+        const value = 50 * obj.x
+        return value + obj.y * obj.z
+    }
+
+    console.log(calc({x: 10, y: 20, z: 30}))
+    const curryAdd = (fn) => {
+        return function (x) {
+            return function (y) {
+                return fn(x, y)
+            }
+        }
+    }
+
+    let res = curryAdd((valueA, valueB) => valueA + valueB)
+    let res1 = res(3)
+    let resx = res1(2)
+    console.log(resx)
+
+    //V8
+    //дескрипторы
+    //Proxy, reflect
+    //DOM
+    //алгоритмы?
+    //полифилы map filter
+    //вопросики
+
+    function setName(name) {
+        this.name = name
+    }
+
+    let a123 = {
+        name: "John"
+    }
+
+    setName.call(a123, "Viktor")
+    console.log(a123)
+
+    Number.prototype[Symbol.iterator] = function* () {
+        const num = this.valueOf();
+        const digits = num.toString().split('').map(Number);
+        yield* digits
+    };
+
+    const num = 12345;
+    const numArray = [...num]; // Преобразует число в массив [1, 2, 3, 4, 5]
+
+    console.log(numArray);
+
+
+    let arr = [1, 2];
+    let temp = 0;
+
+    function* generator(arr) {
+        for (let i = 0; i < arr.length; i++) {
+            temp = arr[i] + arr[i + 1];
+            arr.push(temp);
+            yield temp;
+        }
+    }
+
+
+    let next = generator(arr);
+
+    console.log(next.next().value);
+    console.log(next.next().value);
+    console.log(next.next().value);
+
+
+    let pr1 = new Promise(() => {})
+    let XXX = pr1.then()
+    let YYY = pr1.then()
+    console.log(typeof YYY)
+    console.log(XXX === YYY)
+
+    //obj[key] - key приводит к строке
+    const aaaa = {
+        name: "j"
+    }
+
+    aaaa[0] = "hey"
+    aaaa[1] = "yo"
+    aaaa[2] = "blabla"
+
+    console.log(aaaa)
+
+
+    let user = {
+        age: 25,
+        showAge() {
+            console.log(this.age)
+        }
+    }
+
+    const admin = user
+    user = null
+    // Можно подсунуть null вместо ссылки и admin не перезатрется
+    console.log(admin)
+    console.log(user)
+    admin.showAge()
+
+
+    function counter() {
+        let counter= 0
+        console.log(counter)
+        return () => {
+            console.log(counter)
+            //counter + 1 это просто результат вычеслений который мы никуда не записываем
+            //по этому необходимо записать этот результат в переменную и обновить ее
+            //без return все будет увеличивать, но мы не увидим это при вызове , если только ставить консоль внутри
+            counter = counter + 1
+            return counter
+        }
+    }
+
+    let axc = counter()
+    console.log(axc())
+    console.log(axc())
+
+
+    let az = 1
+    let bz = ++az
+    console.log(bz)
+    console.log(az)
+
+
+    function counter1() {
+        let counter= 0
+        console.log(counter)
+        return () => {
+            console.log(counter)
+            counter = counter + 1
+
+        }
+    }
+
+    let axc1 = counter1()
+    console.log(axc1())
+    console.log(axc1())
+    console.log(axc1())
+    console.log(axc1())
+    console.log(axc1())
+    console.log(axc1())
+
+
+    function yes() {
+        console.log("yes")
+    }
+
+    function sub(cb) {
+        yes = cb
+    }
+
+    function no() {
+        console.log("no")
+        return no
+    }
+
+    let azxz = sub(no)
+    console.log(yes())
+    console.log(yes())
+    console.log(yes())
+    console.log(yes())
+
+    for (var i = 0; i< 10; i++) {
+        setTimeout(() => {
+            console.log(i)
+        }, i * 1000)
+    }
+
+    console.log(i)
+
+    let man = {}
+    let araz = []
+    console.log(man.__proto__ === Object.prototype)
+    console.log(Object.__proto__ === Function.prototype)
+    console.log(araz.__proto__ === Array.prototype);
+    console.log(Function.prototype.__proto__ === Object.prototype);
+
+
+    //Перед самовызывающейся функцией необходимо ; чтобы у нас код работал корректно, а не приписывался к коду выше
+
+    //у нас падает промис, и мы не видим консоль, т.к. не поймана ошибка из rej и она крашит нам скрипт
+    (async () => {
+        let hello = new Promise((res, rej) => {
+            rej(1)
+        })
+        let res = await hello
+        console.log(res)
+    })
+        //поймали ошибку, вывели в консоль, но res у нас undefined, т.к. ничем не разезолвили
+        (async () => {
+            let hello = new Promise((res, rej) => {
+                rej(1)
+            })
+            let res
+            try {
+                res = await hello
+            }catch (e) {
+                console.log(e)
+            }
+            console.log(res)
+        })
+
+    function hello(...yo) {
+        console.log(yo)}
+    hello([1,2,3])
+
+    function hello1(a, b ,c) {
+        console.log(a, b, c)}
+    hello1(...[1,2,3])
+
+
+    //проблема с arguments, все что передаешь летит в arguments, хоть и не указано в аргументах
+    //это и не объект как обычно принято, есть Symbol.iterator, есть length, и не массив, т.к. нет его методов
+    function yo2(a) {
+        console.log(arguments)
+    }
+    yo2(1,2,3)
+
+    //carry
+    //у самой функции есть длинна параметров(то, что она принимает) length, как свойство объекта, а то что функция принимает - аргументы
+    //foo (x=0) length = 0
+    //foo (...params) length = 0
+    //foo ({a,b}) length = 1
+    function carry (f, ...prs) {
+        return (...params) => {
+            return f(...prs, ...params)
+        }
+    }
+
+    //Функция предикат
+
+    //Задачка
+    //тк мы ничего не передаем срабатывает значение по умолчанию
+    //ошибка в том, что z пытается взять значение у самой себя , проинициализроваться своим значением
+
+    var w = 1, z = 2
+    function foo(x = w + 1, y = x + 1, z = z + 1) {
+        console.log(x, y,z)
+    }
+    //foo()
+
+    //попытка примитиву присвоить свойство будет работать, движок создаст временный объект new String
+    //создал объект, добавил свойство и удалил объект, при повтороном обращении ничего не будет
+    //если создать изначально через new String, то будет работать, ведет себя как обычная строка, но это объект
+    //примитив в виде объекта
+    "ghghg".g =234
+
+    //b будет man, тк false и создаем новую переменную и присваиваем ей значение
+    //a будет undefined т.к. мы создаем var a, но не присваиваем ей значение и оно всплывает, хоистинг
+    var a = "hello"
+    function b() {
+        if (false) {
+            var a = "world"
+        } else {
+            var b = "man"
+        }
+        console.log(a)
+        console.log(b)
+    }
+    b()
+
+
+    //игнорирует 1, берет 5 - 1, и 4 умножаем на 2
+    //берет только последнее число, игнорирует все запятые
+    let zzz = (1,5 - 1) * 2
+    console.log(zzz)
+
+//в forEach отдаем alert как колбэк, и алерт нам выведет 1,2.
+// alert уже готовая функция, по этому нам не надо городить ()=>{}
+        [1,2].forEach(alert)
+
+    let obj = {
+        _number:0,
+        name:1,
+        [Symbol.toPrimitive]() {
+            this._number++
+            return this._number
+        }
+    }
+
+    //вызываем первое сравнение, получаем приведению к типу и 1, вторая проверка и вызывается valueOf повторно и так сколько угодно раз если нужно
+    //а toString вернет нам hey при приведению к строке. создаем свой toString, который так же будет работать в случае newObj[abc] = 'hey' и уже ключ hey = hey
+    //а не Object object = hey
+    let abc = {
+        _value: 0,
+        valueOf(){
+            this._value++
+            return this.value
+        },
+        toString() {
+            return 'hey'
+        }
+    }
+    if (abc == 1 && abc == 2 && abc == 3 && abc == 4) alert(a)
+
+    function yo2(a) {
+        console.log(arguments)
+    }
+    yo2(999,2,3)
+
+
+    //передаем как массив
+    function hello(...yo) {
+        console.log(yo)}
+    hello([1,2,3])
+
+    function hello1(a, b ,c) {
+        console.log(a, b, c)}
+    hello1(...[1,2,3])
+
+
+
+    //Даже если ничего не возвращаешь, то async функция резолвит промис и у нас undefined
+    async function yo1() {
+
+    }
+    let yoyo = yo1()
+    console.log(yoyo)
+
+    //я не могу поменять внешнюю переменную , т.к. у меня a в аргументах
+    const a = 100
+    function yo(a) {
+        a = 30
+    }
+    yo(200)
+    console.log(a)
+
+    document.querySelectorAll(".yo").forEach(el => el.addEventListener("click", (e) => {
+        console.log(e.target)
+        console.log(e.currentTarget)
+    }))
+
+    const aaaa = {
+        name: "j"
+    }
+
+    aaaa[0] = "hey"
+    aaaa[1] = "yo"
+    aaaa[2] = "blabla"
+
+    console.log(aaaa)
+
+    //Стрелочная фукнция в объекте
+    //Готового объекта еще нет, не существует, он через двоеточие создается, структурируется,
+    // и мы получается создаем эту функцию в глобальном пространстве, по этому ссылка на виндов
+
+    //начинают тикать одновреммено, а потом через секунду каждый результат появляется
+    //с let получается, что внутри блока своя переменная, а в var своя глобальная
+    //можно обернуть в функцию самовызывающуюся и передавать актуальное i в случае с var
+    for (var i = 0; i< 10; i++) {
+        setTimeout(() => {
+            console.log(i)
+            }, i * 1000)
+    }
+
+    console.log(i)
+
+    //Даже минимальная задержка играет роль на выполнение и появляется вторым, но при таких минимальных задержках
+    // , может как первым выполнится если успеет посчитать или второй если первый еще не посчитал
+    setTimeout(() => console.log("YES"), 1)
+    setTimeout(() => console.log("NO"), 0)
 
         function  getDivisorsCnt(n){
     let count = 0;
