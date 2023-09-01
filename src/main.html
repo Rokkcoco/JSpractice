@@ -14,7 +14,65 @@
 </div>
 </body>
 <script>
+    class As {
+        constructor(name) {
+            this.name = name
+        }
+    }
 
+    let aza55 = new As("h")
+    console.log(aza55)
+
+    //Event loop. Микротаски - самый высокий приоритет. Макротаски - одно или несколько заданий между обновлениями интерфейса,
+    // requestAnimationFrame(перерисовки) - все задачи из очереди, но новые - уже в следующем тике,
+    // requestIdleCallback(например отправить данные аналитики) - в период простоя, когда нет более приоритетных задач.
+    //Микротаски - промисы, queueMicrotask, MutationObserver
+
+    //Защита функции от вызова без new. Можно возвращать new самому, возвращая эту функцию конструтор с new, или выкидывать ошибку
+    function Constructor() {
+        if (typeof new.target === "undefined") {
+            return new Constructor()
+        }
+    }
+    //[[Prototype]] у функции declaration работает только в момент создания,
+    // если мы создали новый экземпляр, но добавили что-то позже в прототип, то это не сработает, экземпляр будет ссылаться на тот прототип в момент которого был создан
+
+    //Функция - объект, у которого есть свойства name, length, а так же [[Call]] позволяющую вызывать и [[Scope]] позволяющий создавать область видимости(замыкание), [[Prototype]] - куда мы можем записывать, что хотим
+
+    //Object.getOwnPropertyNames - аналог Object.keys, получаем массив свойств объекта, еще есть getOwnPropertySymbols, getOwnPropertyDescriptors
+
+    //Object.hasOwn - проверяет свойство имеено в объекте, а не в прототипе, лучше чем hasOwnProperty, тк, если создали без прототипа через Object.create, мы не сможем использовать hasOwnProperty
+
+    //общаться с __proto__ не совсем правильно, лучше использовать методы подходящие для этого setPrototypeOf, getPrototypeOf
+
+    // {} === Object.create(Object.prototype), то что JS делает под копотом
+
+    //при переводе в JSON.stringify function, undefined, symbol,  NaN, Infinity в объекте удаляться, в массиве превратятся в null, чтобы сохранить порядок массива
+
+    //адекватная проверна NaN на NaN
+    // Object.is(NaN, NaN)
+    //вместо isNaN, который может строгу приравнять к NaN, тк пытается привести ее к строке, мы получаем сравнение только на NaN
+
+    //Object.create - создание объекта с выставленным прототипом
+
+    //Кража метода
+    const array = []
+    const date = new Date()
+    const error = new Error()
+    //вызов метода toString c другим контекстом
+    Object.prototype.toString.call(array) //Object array
+    Object.prototype.toString.call(date)  //Object date
+    Object.prototype.toString.call(error) //Object error
+
+    //Symbol.toStringTag - символ который будет реагировать на преобразование к toString
+    Object.prototype.toString.call({})
+    const apple = {
+    [Symbol.toStringTag]: "apple"
+    }
+    Object.prototype.toString.call(apple) //Object apple
+
+    //Object.isExtensible - проверяет возможность добавление новых свойств и методов в объект
+    //Object.preventExtensions - убрать возможность добавления новый свойств и методов
 
     // let a = 1
     // a.valueOf() === 1
@@ -107,7 +165,6 @@
     //Proxy, reflect
     //DOM
     //алгоритмы?
-    //полифилы map filter
     //вопросики
 
     function setName(name) {
