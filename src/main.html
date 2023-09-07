@@ -8,7 +8,7 @@
 <div id="1" class="yo">
     <div id="2" class="yo">
         <div id="3" class="yo">
-            <button  id="4" class="yo">OK</button>
+            <button id="4" class="yo">OK</button>
         </div>
     </div>
 </div>
@@ -23,31 +23,110 @@
     let aza55 = new As("h")
     console.log(aza55)
 
+    //Преобразование Symbol к логическуому типу всегда true, к числу - ошибка, к строке только явно через String, иначе ошибка.
+    //Если символы закидывать в объект как свойство, то они будут уникальны, даже если значение символа совпадает
+
+    //Итератор - это корутина(сопрограмма). Корутина - функция, которая может приостановить работу, запомнить текущее состояние, имеет несколько точек входа и выхода.
+
+    //Связка reduce с async/await. Мы можем использовать и async колбэки в других методах массивов.
+    // const numbers = [4, 8, 15, 16, 23, 42]
+    // const result = numbers.reduce(async(sum, number) => {
+    //    return (await sum) + number
+    // },0)
+    // console.log(await result) //108
+
+    //Top level await работает внутри ES-модуля или в DevTools. Делает работу модуля асинхронным.
+
+    //При создании функции async, движок заворачивает свой return в Promise.resolve, вот и вся магия
+
+    // Если промис завис, его можно отменить при помощи Promise.race
+    // Promise.race([
+    //     fetchLongRequest(),
+    //     new Promise((_, reject) => setTimeout(reject, 3000)),
+    // ]).then(data => {
+    //     //данные получены
+    // }).catch(data => {
+    //     //отказ по таймеру
+    // })
+
+    //В случае передачи пустого массива в статические методы промиса. All resolve сразу, allSettled resolve сразу, any попадет в catch(все промисы отклонены), race будет в pending и результата не будет
+
+    //Promise.reject еще раз обернет в Promise как причину отказа, ничего не распаковывая
+    // let a = Promise.resolve(123)
+    // let b = Promise.reject(a)
+    // b.catch(data => console.log(data)) //Promise 123
+    //
+    // Promise.resolve распаковывает промис, возвращает новый промис без изменений, в случае если он уже есть, в случае с new Promise, то в любом случае возвращается новый промис
+    // const promise = Promise.resolve(123)
+    // const resolved = Promise.resolve(promise)
+    // console.log(promise === resolved) //true
+    //
+    // const promise = Promise.resolve(123)
+    // new Promise((resolve) => resolve(promise)).then(value => console.log(value)) //123
+    // new Promise((_, reject) => reject(promise)).catch(value => console.log(value)) //Promise: {<resolved>:123}
+
     //Event loop. Микротаски - самый высокий приоритет. Макротаски - одно или несколько заданий между обновлениями интерфейса,
     // requestAnimationFrame(перерисовки) - все задачи из очереди, но новые - уже в следующем тике,
     // requestIdleCallback(например отправить данные аналитики) - в период простоя, когда нет более приоритетных задач.
     //Микротаски - промисы, queueMicrotask, MutationObserver
 
+    //В объект ключом может быть только строка, а в map/set любой примитив или объект
+    //WeakMap, WeakSet - принимают только объект. В случае если ссылка удаляется и она остается только 1 в weakmap/weakset, она будет гарантирована удалена тоже
+    //Отсутствуют методы коллекций keys, values, entries
+    // const map = new WeakMap()
+    // let elem = document.querySelector(".button")
+    // map.set(elem, {data: "yo"})
+    // map.get(elem) //{data: "yo}
+    // elem.parentNode.removeChild(elem)
+    // elem = null
+
+    //?? - оператор нулевого слияния. Оператор ?? возвращает первый аргумент, если он не null/undefined, иначе второй
+    // const newUser = null
+    // newUser ?? "User"
+
+    //Array.of - позволяет создать массив если мы передаем одно число, а не пустоту как в случает с просто Array
+    //Array.of(3) [3]
+
+    //Array.from - позволяет создать массив из псевдомассива
+    // const HTMLCollection = document.querySelectorAll('div')
+    // [].slice.call(HTMLCollection, 0 , 3) //кража метода [div,div,div]
+    // Array.from(HTMLCollection).slice(0, 3) //[div,div,div]
+
+    // Теговый шаблон — это функция, которая позволяет разбирать шаблонную строку.
+    //     function loggerTag(strings, ...expressionValues) {
+    //     console.log(strings)
+    //     console.log(...expressionValues)
+    // }
+    //
+    // loggerTag`Булевых значений всего ${2}: они бывают либо ${true} либо ${false}`
+    // ['Булевых значений всего ', ': они бывают либо ', ' либо ', '']
+    // 2 true false
+
+    //Тегированый шаблон в жсе из коробки. Позволяет получить строку со служебным симоволов , в том виде каком есть, без преобразования
+    // String.raw`\n` // \\n
+
+    //Защищенный конструктор
     //Защита функции от вызова без new. Можно возвращать new самому, возвращая эту функцию конструтор с new, или выкидывать ошибку
     function Constructor() {
         if (typeof new.target === "undefined") {
             return new Constructor()
         }
     }
+
     //[[Prototype]] у функции declaration работает только в момент создания,
     // если мы создали новый экземпляр, но добавили что-то позже в прототип, то это не сработает, экземпляр будет ссылаться на тот прототип в момент которого был создан
 
     //Функция - объект, у которого есть свойства name, length, а так же [[Call]] позволяющую вызывать и [[Scope]] позволяющий создавать область видимости(замыкание), [[Prototype]] - куда мы можем записывать, что хотим
 
-    //Object.getOwnPropertyNames - аналог Object.keys, получаем массив свойств объекта, еще есть getOwnPropertySymbols, getOwnPropertyDescriptors
+    //информация о свойствах объект. in - проверит объект и всю цепочку прототипов
+    //Object.getOwnPropertyNames - все свойства объект, Object.keys - только перечисляемые свойства, еще есть getOwnPropertySymbols - все символы, getOwnPropertyDescriptors - все дескрипторы.
 
     //Object.hasOwn - проверяет свойство имеено в объекте, а не в прототипе, лучше чем hasOwnProperty, тк, если создали без прототипа через Object.create, мы не сможем использовать hasOwnProperty
 
-    //общаться с __proto__ не совсем правильно, лучше использовать методы подходящие для этого setPrototypeOf, getPrototypeOf
-
     // {} === Object.create(Object.prototype), то что JS делает под копотом
 
-    //при переводе в JSON.stringify function, undefined, symbol,  NaN, Infinity в объекте удаляться, в массиве превратятся в null, чтобы сохранить порядок массива
+    //при переводе в JSON.stringify попробует вызвать toJSON. Function, undefined, symbol,  NaN, Infinity в объекте удаляться, в массиве превратятся в null, чтобы сохранить порядок массива
+    //у Date есть свой метод для JSON.parse Date.parse,который позволяет сделать из нее объект дата
 
     //адекватная проверна NaN на NaN
     // Object.is(NaN, NaN)
@@ -56,6 +135,7 @@
     //Object.create - создание объекта с выставленным прототипом
 
     //Кража метода
+    //Позволяет считать встроенное свойство [[Class]] у объекта
     const array = []
     const date = new Date()
     const error = new Error()
@@ -67,12 +147,41 @@
     //Symbol.toStringTag - символ который будет реагировать на преобразование к toString
     Object.prototype.toString.call({})
     const apple = {
-    [Symbol.toStringTag]: "apple"
+        [Symbol.toStringTag]: "apple"
     }
     Object.prototype.toString.call(apple) //Object apple
 
+    //[[Extensible]]
     //Object.isExtensible - проверяет возможность добавление новых свойств и методов в объект
     //Object.preventExtensions - убрать возможность добавления новый свойств и методов
+
+    //делегирование другому генератору, вызов его через yield*
+    //при делегировании результат return вернется в yield*, отработает как то что мы возвращаем {value, а done будет false}
+    // и продолжит работу, а в обычном случае при return, done меняется на true
+    // function* apples() {
+    //     yield "red"
+    //     return "green"
+    // }
+    //
+    // function* fruits() {
+    //     const result = yield* apples()
+    //     yield result
+    // }
+    //
+    // const iterator = fruits()
+    // iterator.next()  //{value: "red", done: false}
+    // iterator.next()  //{value: "green", done: false}
+    // iterator.next()  //{value: undefined, done: true}
+
+
+    //Symbol.iterator есть в string, array, map, set, псевдомассивах - arguments, HTMLCollection и тд. Так же поддерживает Unicode. В обычном цикле for будут проблемы, а в for of нет.
+    //Object.keys, Object.values, Object.entries - возвращают массив
+    //Методы коллекций(Map,Set) keys, values, entries - возвращают итератор
+    //По-умолчанию итератор для Array, Set - values, для Map - entries.
+
+    //Превратить итератор в массив
+    // const set = new Set([1,3,5])
+    // const array = [...set]
 
     // let a = 1
     // a.valueOf() === 1
@@ -104,7 +213,7 @@
     //а эта нам возвращает функцию с уже определенным набором аргументов, но в случае если мы не передадим оставшиеся все
     //то мы получим ошибку а не новую функцию в которой нужно будет передать оставшиеся аргументы
     const partialSum = partial(sum, 42)
-    partialSum(20,38) //100
+    partialSum(20, 38) //100
     partialSum(17) //NaN
 
 
@@ -112,12 +221,12 @@
     console.log(true + false) //1, true приводится к 1, false к 0
     console.log('' + 1) //"1"
     console.log(true + []) //"true" string
-    console.log({}-[]) //NaN, без скобочек -0
+    console.log({} - []) //NaN, без скобочек -0
     //null приводится к 0
     //true / false	1 / 0
-    console.log({}+[]) //object Object, без скобочек 0
-    console.log([]+{}) //object Object
-    console.log([]-{}) //NaN
+    console.log({} + []) //object Object, без скобочек 0
+    console.log([] + {}) //object Object
+    console.log([] - {}) //NaN
     console.log(undefined + "2") //"undefined2"
     console.log(undefined + 2) //NaN => undefined будет при приведении равен NaN
     console.log(!![]) //true
@@ -130,7 +239,9 @@
     //мы можем не оборачивать примитив в () чтобы вызвать методы, а поставить просто две точки будет работать
     //просто точка воспринимается движком как десятичная часть числа, две точки или пробел мы даем знать , что ее нет
     console.log(22..toString())
-    console.log(22 .toString())
+    console.log(22.
+    toString()
+    )
 
     const a = {
         age: 2,
@@ -139,7 +250,7 @@
         }
     }
 
-    setTimeout(() => a.showAge(),100)
+    setTimeout(() => a.showAge(), 100)
 
     function calc(obj) {
         const value = 50 * obj.x
@@ -209,7 +320,8 @@
     console.log(next.next().value);
 
 
-    let pr1 = new Promise(() => {})
+    let pr1 = new Promise(() => {
+    })
     let XXX = pr1.then()
     let YYY = pr1.then()
     console.log(typeof YYY)
@@ -243,7 +355,7 @@
 
 
     function counter() {
-        let counter= 0
+        let counter = 0
         console.log(counter)
         return () => {
             console.log(counter)
@@ -267,7 +379,7 @@
 
 
     function counter1() {
-        let counter= 0
+        let counter = 0
         console.log(counter)
         return () => {
             console.log(counter)
@@ -304,7 +416,7 @@
     console.log(yes())
     console.log(yes())
 
-    for (var i = 0; i< 10; i++) {
+    for (var i = 0; i < 10; i++) {
         setTimeout(() => {
             console.log(i)
         }, i * 1000)
@@ -338,19 +450,23 @@
             let res
             try {
                 res = await hello
-            }catch (e) {
+            } catch (e) {
                 console.log(e)
             }
             console.log(res)
         })
 
     function hello(...yo) {
-        console.log(yo)}
-    hello([1,2,3])
+        console.log(yo)
+    }
 
-    function hello1(a, b ,c) {
-        console.log(a, b, c)}
-    hello1(...[1,2,3])
+    hello([1, 2, 3])
+
+    function hello1(a, b, c) {
+        console.log(a, b, c)
+    }
+
+    hello1(...[1, 2, 3])
 
 
     //проблема с arguments, все что передаешь летит в arguments, хоть и не указано в аргументах
@@ -358,14 +474,15 @@
     function yo2(a) {
         console.log(arguments)
     }
-    yo2(1,2,3)
+
+    yo2(1, 2, 3)
 
     //carry
     //у самой функции есть длинна параметров(то, что она принимает) length, как свойство объекта, а то что функция принимает - аргументы
     //foo (x=0) length = 0
     //foo (...params) length = 0
     //foo ({a,b}) length = 1
-    function carry (f, ...prs) {
+    function carry(f, ...prs) {
         return (...params) => {
             return f(...prs, ...params)
         }
@@ -378,20 +495,23 @@
     //ошибка в том, что z пытается взять значение у самой себя , проинициализроваться своим значением
 
     var w = 1, z = 2
+
     function foo(x = w + 1, y = x + 1, z = z + 1) {
-        console.log(x, y,z)
+        console.log(x, y, z)
     }
+
     //foo()
 
     //попытка примитиву присвоить свойство будет работать, движок создаст временный объект new String
     //создал объект, добавил свойство и удалил объект, при повтороном обращении ничего не будет
     //если создать изначально через new String, то будет работать, ведет себя как обычная строка, но это объект
     //примитив в виде объекта
-    "ghghg".g =234
+    "ghghg".g = 234
 
     //b будет man, тк false и создаем новую переменную и присваиваем ей значение
     //a будет undefined т.к. мы создаем var a, но не присваиваем ей значение и оно всплывает, хоистинг
     var a = "hello"
+
     function b() {
         if (false) {
             var a = "world"
@@ -401,21 +521,22 @@
         console.log(a)
         console.log(b)
     }
+
     b()
 
 
     //игнорирует 1, берет 5 - 1, и 4 умножаем на 2
     //берет только последнее число, игнорирует все запятые
-    let zzz = (1,5 - 1) * 2
+    let zzz = (1, 5 - 1) * 2
     console.log(zzz)
 
 //в forEach отдаем alert как колбэк, и алерт нам выведет 1,2.
 // alert уже готовая функция, по этому нам не надо городить ()=>{}
-        [1,2].forEach(alert)
+        [1, 2].forEach(alert)
 
     let obj = {
-        _number:0,
-        name:1,
+        _number: 0,
+        name: 1,
         [Symbol.toPrimitive]() {
             this._number++
             return this._number
@@ -427,7 +548,7 @@
     //а не Object object = hey
     let abc = {
         _value: 0,
-        valueOf(){
+        valueOf() {
             this._value++
             return this.value
         },
@@ -440,32 +561,39 @@
     function yo2(a) {
         console.log(arguments)
     }
-    yo2(999,2,3)
+
+    yo2(999, 2, 3)
 
 
     //передаем как массив
     function hello(...yo) {
-        console.log(yo)}
-    hello([1,2,3])
+        console.log(yo)
+    }
 
-    function hello1(a, b ,c) {
-        console.log(a, b, c)}
-    hello1(...[1,2,3])
+    hello([1, 2, 3])
 
+    function hello1(a, b, c) {
+        console.log(a, b, c)
+    }
+
+    hello1(...[1, 2, 3])
 
 
     //Даже если ничего не возвращаешь, то async функция резолвит промис и у нас undefined
     async function yo1() {
 
     }
+
     let yoyo = yo1()
     console.log(yoyo)
 
     //я не могу поменять внешнюю переменную , т.к. у меня a в аргументах
     const a = 100
+
     function yo(a) {
         a = 30
     }
+
     yo(200)
     console.log(a)
 
@@ -491,10 +619,10 @@
     //начинают тикать одновреммено, а потом через секунду каждый результат появляется
     //с let получается, что внутри блока своя переменная, а в var своя глобальная
     //можно обернуть в функцию самовызывающуюся и передавать актуальное i в случае с var
-    for (var i = 0; i< 10; i++) {
+    for (var i = 0; i < 10; i++) {
         setTimeout(() => {
             console.log(i)
-            }, i * 1000)
+        }, i * 1000)
     }
 
     console.log(i)
@@ -504,139 +632,139 @@
     setTimeout(() => console.log("YES"), 1)
     setTimeout(() => console.log("NO"), 0)
 
-        function  getDivisorsCnt(n){
-    let count = 0;
-    for (let i = 1; i <= Math.sqrt(n); i++) {
-        if (n % i === 0) {
-            count += (i * i === n) ? 1 : 2
+    function getDivisorsCnt(n) {
+        let count = 0;
+        for (let i = 1; i <= Math.sqrt(n); i++) {
+            if (n % i === 0) {
+                count += (i * i === n) ? 1 : 2
 
+            }
         }
+        return count
     }
-    return count
-}
 
-//!!! Сумма всех положительных чисел return (n * (n + 1))/ 2
+    //!!! Сумма всех положительных чисел return (n * (n + 1))/ 2
 
-// function getBanknoteList(amountOfMoney) {
-//     const banknotes = [1000, 500, 100, 50, 20, 10, 5, 2, 1]
-//     let numb = amountOfMoney
-//     let res = []
-//
-//     while (numb > 0) {
-//         for (let i = 0; i < banknotes.length ; i++)
-//             while (numb >= banknotes[i]) {
-//                 numb = numb - banknotes[i]
-//                 res.push(banknotes[i])
-//             }
-//     }
-//     return res
-// }
-// console.log(getBanknoteList(2500))
+    // function getBanknoteList(amountOfMoney) {
+    //     const banknotes = [1000, 500, 100, 50, 20, 10, 5, 2, 1]
+    //     let numb = amountOfMoney
+    //     let res = []
+    //
+    //     while (numb > 0) {
+    //         for (let i = 0; i < banknotes.length ; i++)
+    //             while (numb >= banknotes[i]) {
+    //                 numb = numb - banknotes[i]
+    //                 res.push(banknotes[i])
+    //             }
+    //     }
+    //     return res
+    // }
+    // console.log(getBanknoteList(2500))
 
-// function twiceAsOld(dadYearsOld, sonYearsOld) { //Math.abs выводит всегда положительное число
-//     return Math.abs(dadYearsOld - sonYearsOld*2)
-// }
-//
-// function check(a, x) { //проверяет на наличие в массиве значения
-//     return a.includes(x)
-// }
-//
-// function index(array, n){ //вернуть число из массива в степени n, или же -1, если такое по длинне оно отсутствует
-//     //your code here
-//     return array[n] ** n || -1;
-// }
-//
-// const problem = x => typeof x === 'string' ? 'Error' : x * 50 + 6; //Проверить значение на строку
-//
-// function twoSort(s) { //отсортировать массив, взять 1ый элемент , разделить и соединить со строковыми символами
-//     return s.sort()[0].split('').join('***');
-// }
+    // function twiceAsOld(dadYearsOld, sonYearsOld) { //Math.abs выводит всегда положительное число
+    //     return Math.abs(dadYearsOld - sonYearsOld*2)
+    // }
+    //
+    // function check(a, x) { //проверяет на наличие в массиве значения
+    //     return a.includes(x)
+    // }
+    //
+    // function index(array, n){ //вернуть число из массива в степени n, или же -1, если такое по длинне оно отсутствует
+    //     //your code here
+    //     return array[n] ** n || -1;
+    // }
+    //
+    // const problem = x => typeof x === 'string' ? 'Error' : x * 50 + 6; //Проверить значение на строку
+    //
+    // function twoSort(s) { //отсортировать массив, взять 1ый элемент , разделить и соединить со строковыми символами
+    //     return s.sort()[0].split('').join('***');
+    // }
 
-// const oddCount = n => Math.floor(n/2) ; //!!! Для задач где просят вывести длинну огромных массивов
-//
-// switchItUp=n=>["Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine"][n] //подход без свитча, а берем нужный индекс со строкой из массива
-// function switchItUp(number) { //Switch case для перевода числа в строку
-//     switch (number) {
-//         case 0: return 'Zero';
-//         case 1: return 'One';
-//         case 2: return 'Two';
-//         case 3: return 'Three';
-//         case 4: return 'Four';
-//         case 5: return 'Five';
-//         case 6: return 'Six';
-//         case 7: return 'Seven';
-//         case 8: return 'Eight';
-//         case 9: return 'Nine';
-//     }
-// }
-//
-// function fakeBin(x){ //преобразует строку в массив, цифры больше 5 в 1, другие 0 и объеденяет назад в строку
-//     let num = x.toString().split('')
-//     return num.map(t => t>4 ? 1 : 0).join('')
-// }
-// function fakeBin(x) {
-//     return x.replace(/\d/g, d => d < 5 ? 0 : 1);
-// }
-//
-// function paperwork(n, m) { //Умножение с проверкой, что оба числа больше 0
-//     return n > 0 && m > 0 ? n * m : 0
-// }
+    // const oddCount = n => Math.floor(n/2) ; //!!! Для задач где просят вывести длинну огромных массивов
+    //
+    // switchItUp=n=>["Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine"][n] //подход без свитча, а берем нужный индекс со строкой из массива
+    // function switchItUp(number) { //Switch case для перевода числа в строку
+    //     switch (number) {
+    //         case 0: return 'Zero';
+    //         case 1: return 'One';
+    //         case 2: return 'Two';
+    //         case 3: return 'Three';
+    //         case 4: return 'Four';
+    //         case 5: return 'Five';
+    //         case 6: return 'Six';
+    //         case 7: return 'Seven';
+    //         case 8: return 'Eight';
+    //         case 9: return 'Nine';
+    //     }
+    // }
+    //
+    // function fakeBin(x){ //преобразует строку в массив, цифры больше 5 в 1, другие 0 и объеденяет назад в строку
+    //     let num = x.toString().split('')
+    //     return num.map(t => t>4 ? 1 : 0).join('')
+    // }
+    // function fakeBin(x) {
+    //     return x.replace(/\d/g, d => d < 5 ? 0 : 1);
+    // }
+    //
+    // function paperwork(n, m) { //Умножение с проверкой, что оба числа больше 0
+    //     return n > 0 && m > 0 ? n * m : 0
+    // }
 
-// function findNeedle(haystack) { //ищет в массиве сопвпадение по слову
-//     return `found the needle at position ${haystack.indexOf("needle")}`
-// }
+    // function findNeedle(haystack) { //ищет в массиве сопвпадение по слову
+    //     return `found the needle at position ${haystack.indexOf("needle")}`
+    // }
 
-// function abbrevName(name){ //Переводит имя в инициалы и соединяет через точку
-//     return name.split(' ').map(i => i[0].toUpperCase()).join('.')
-// }
-// function abbrevName(name) {
-//     let a = name.split(' ')
-//     return a[0][0] + "." + a[1][0]
-// }
-// abbrevName("Sam Harris")
-//
-// function digitize(n) { //число переводим в строку, разделяем в массива, разворачиваем и преобразуем массив строк в массив чисел
-//     return n.toString().split('').reverse().map(t => +t)
-// }
+    // function abbrevName(name){ //Переводит имя в инициалы и соединяет через точку
+    //     return name.split(' ').map(i => i[0].toUpperCase()).join('.')
+    // }
+    // function abbrevName(name) {
+    //     let a = name.split(' ')
+    //     return a[0][0] + "." + a[1][0]
+    // }
+    // abbrevName("Sam Harris")
+    //
+    // function digitize(n) { //число переводим в строку, разделяем в массива, разворачиваем и преобразуем массив строк в массив чисел
+    //     return n.toString().split('').reverse().map(t => +t)
+    // }
 
-// function add(x) { //пробросить значение глубоко в функцию на 3м вызове и посчтитать
-//     return function(y) {
-//         return function(z) {
-//             return x + y + z
-//         }
-//     }
-// }
-// add(10)(20)(30);
-//
-// function splitify(str) { //разделить массив через регулярку, выбрав только символы
-//     return str.split(/\W/)
-// }
+    // function add(x) { //пробросить значение глубоко в функцию на 3м вызове и посчтитать
+    //     return function(y) {
+    //         return function(z) {
+    //             return x + y + z
+    //         }
+    //     }
+    // }
+    // add(10)(20)(30);
+    //
+    // function splitify(str) { //разделить массив через регулярку, выбрав только символы
+    //     return str.split(/\W/)
+    // }
 
-// function alphabeticalOrder(arr) { //отсортировать массив через функцию
-//     return arr.sort(function(a,b) {
-//         return a === b ? 0 : a>b ? 1: -1
-//     })
-// }
-// alphabeticalOrder(["a", "d", "c", "a", "z", "g"]);
+    // function alphabeticalOrder(arr) { //отсортировать массив через функцию
+    //     return arr.sort(function(a,b) {
+    //         return a === b ? 0 : a>b ? 1: -1
+    //     })
+    // }
+    // alphabeticalOrder(["a", "d", "c", "a", "z", "g"]);
 
-// function enough(cap, on, wait) { //суммируем значение, а если оно меньше второго параметра, то выведется второй параметр 0
-//     return Math.max(wait + on - cap, 0);
-// }
+    // function enough(cap, on, wait) { //суммируем значение, а если оно меньше второго параметра, то выведется второй параметр 0
+    //     return Math.max(wait + on - cap, 0);
+    // }
 
-// function removeEveryOther(arr){ //пушим в массим каждое 2ое значение
-//     return arr.filter(function(elem, index) {
-//         return index % 2 === 0;
-//     });
-// }
-//     function removeEveryOther(arr){
-//         //your code here
-//         let arraY = []
-//         for (let i = 0; i< arr.length; i+=2) {
-//             arraY.push(arr[i])
-//         }
-//         console.log(arraY)
-//     }
-//     removeEveryOther(['Hello', 'Goodbye', 'Hello Again'])
+    // function removeEveryOther(arr){ //пушим в массим каждое 2ое значение
+    //     return arr.filter(function(elem, index) {
+    //         return index % 2 === 0;
+    //     });
+    // }
+    //     function removeEveryOther(arr){
+    //         //your code here
+    //         let arraY = []
+    //         for (let i = 0; i< arr.length; i+=2) {
+    //             arraY.push(arr[i])
+    //         }
+    //         console.log(arraY)
+    //     }
+    //     removeEveryOther(['Hello', 'Goodbye', 'Hello Again'])
 
     // function getGrade (s1, s2, s3) { //считам среднее число и выводим результат
     //     avg = (s1+s2+s3)/3;
@@ -680,12 +808,12 @@
     //         return "Player 2 won!";
     //     }
     // };
-// const rps = (p1, p2) => { //интересное решение через регулярку
-//     if(p1 === p2) {
-//         return 'Draw!'
-//     };
-//     return `Player ${/rockscissors|scissorspaper|paperrock/.test(p1+p2)? 1 : 2} won!`;
-// }
+    // const rps = (p1, p2) => { //интересное решение через регулярку
+    //     if(p1 === p2) {
+    //         return 'Draw!'
+    //     };
+    //     return `Player ${/rockscissors|scissorspaper|paperrock/.test(p1+p2)? 1 : 2} won!`;
+    // }
 
     // const doubleChar = (str) => str.split("").map(c => c + c).join(""); //Удвоить количество символов в строке
 
