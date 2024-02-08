@@ -240,9 +240,9 @@ console.dir(myShogun.__proto__.__proto__.__proto__ )
 console.dir(myShogun.__proto__.__proto__.__proto__.__proto__ )
 
 //у кого нет прото?
-//Object.create(null)
-//Object.create({})
-//Object.create(Object.prototype)
+//Object.create(null) - объект без прото
+//Object.create({}) - объекто с пустым объектом в качестве прото
+//Object.create(Object.prototype) - создание объекта как мы создаем обычный объект через его литерал {}
 
 
 //Свойство __proto__ — исторически обусловленный геттер/сеттер для [[Prototype]]
