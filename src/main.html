@@ -262,7 +262,9 @@
     //мы можем не оборачивать примитив в () чтобы вызвать методы, а поставить просто две точки будет работать
     //просто точка воспринимается движком как десятичная часть числа, две точки или пробел мы даем знать , что ее нет
     console.log(22..toString())
-    console.log(22 .toString())
+    console.log(22.
+    toString()
+    )
 
     const a = {
         age: 2,
@@ -663,6 +665,29 @@
         }
         return count
     }
+//найти два числа в массиве ints что в сумме дают число s
+//     var sum_pairs=function(ints, s){
+//         var seen = {}
+//         for (var i = 0; i < ints.length; ++i) {
+//             if (seen[s - ints[i]]) {
+//                 console.log(ints[i])
+//                 console.log(seen)
+//                 return [s - ints[i], ints[i]];
+//             }
+//             seen[ints[i]] = 'lol'
+//             console.log(seen)
+//         }
+//     }
+//
+    //сделать из строку массив только с теми значениями и показать его длинну
+    //function strCount(str, letter){
+    //   return str.split(letter).length-1
+    //}
+
+    //Проверить если первое true или второе то true, если оба true то false, в остальных случиях false
+    //function xor(a, b) {
+    //  return a != b;
+    //}
 
     //Создать массив значений исходя из массива со значениями от и до
     //const between = (a, b) => Array.from(new Array(b-a+1), (_, i) => a + i);
