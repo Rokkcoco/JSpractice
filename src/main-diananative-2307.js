@@ -428,7 +428,18 @@ let c = new Users("relax")
 
 // Задачи
 // 1
-
+//Выведет объект Б, как обычный this через function declaration
+// var a = {}
+// var b = {name: 'H'}
+//
+// function logFn() {
+//     console.log(this)
+// }
+//
+// a.fn = logFn
+// b.fn = a.fn
+//
+// b.fn()
 
 // 2
 //this - window

@@ -212,6 +212,19 @@ promise.then(function(result) {
 
 /////--------Задачи
 
+//Выводит CBA сначала выводим первый промис, Показывает С, и добавляет колбэк в очередь тасок, затем выводим 2ой колбэк Б, и потом финальный колбэк с А
+//const p = new Promise((resolve) => {
+// resolve('')
+// })
+//
+// p.then(() => {
+//     p.then(() => console.log('A'))
+//     console.log("C")
+// })
+//
+// p.then(() => console.log('B'))
+
+
 const promise6 = Promise.resolve(5)
   .then((value) => `${value} and bar`)
   .then((value) => `${value} and bar again`)
